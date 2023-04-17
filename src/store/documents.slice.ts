@@ -1,26 +1,28 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-interface IDocument {
+export interface IDocument {
   title: string;
   content: string;
   dateCreated: number;
   lastModified: number;
+  pinned: boolean;
 }
 
 // NOTE Dev Only
 const initialState: IDocument[] = [
-  dev_createDocument('Document Marker'),
+  dev_createDocument('Document Marker', true),
   dev_createDocument('SoR Bank')
 ];
 
 // NOTE Dev Only
-export function dev_createDocument(title: string): IDocument {
+export function dev_createDocument(title: string, pinned?: boolean): IDocument {
   return {
     title,
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, ad. Quo voluptas id voluptatibus laudantium, modi nisi, qui quisquam odit ipsum rem, corrupti adipisci tempora error dolorum beatae delectus consequatur.',
     dateCreated: Date.now(),
-    lastModified: Date.now() - 1_000 * 60 * 60
+    lastModified: Date.now() - 1_000 * 60 * 60,
+    pinned: !!pinned
   };
 }
 

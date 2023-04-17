@@ -1,5 +1,5 @@
 import { ThemeOverride, extendTheme } from '@chakra-ui/react';
-import { Button, Input, Tabs, Tooltip, iosColor, mode } from './ios.style';
+import { Button, Input, Tabs, Tooltip, Menu, iosColor, mode } from './ios.style';
 
 export const theme = extendTheme({
   styles: {
@@ -21,13 +21,13 @@ export const theme = extendTheme({
     Input,
     Button,
     Tabs,
-    Tooltip
+    Tooltip,
+    Menu
   },
   colors: {
     ios: iosColor
   },
   config: {
-    useSystemColorMode: true,
-    initialColorMode: 'system'
+    useSystemColorMode: true
   }
 } as ThemeOverride);

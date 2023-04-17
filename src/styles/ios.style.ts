@@ -50,6 +50,13 @@ export const Tooltip = defineStyleConfig({
   }
 });
 
+// TODO menu styling
+export const Menu = defineStyleConfig({
+  variants: {
+    ios: (props) => ({})
+  }
+});
+
 export function mode(light: string, dark: string) {
   return (props: StyleFunctionProps) => (props.colorMode === 'light' ? light : dark);
 }

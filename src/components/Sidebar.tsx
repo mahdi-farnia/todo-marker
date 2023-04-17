@@ -3,8 +3,12 @@ import { useCallback } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useAppDispatch } from '../store';
 import { addDocument, dev_createDocument } from '../store/documents.slice';
-import SearchBox from './SearchBox';
 import DocumentList from './DocumentList';
+import SearchBox from './SearchBox';
+import SidebarMenu from './SidebarMenu';
+
+// TODO pinned documents in list
+// TODO search documents
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,16 +33,8 @@ const Sidebar: React.FC = () => {
         Menu
       </Heading>
       <SearchBox px={6} />
-      <HStack justifyContent="space-between" w="full" pl={4} px={6}>
-        <Heading
-          as="h4"
-          textTransform="uppercase"
-          fontSize="x-small"
-          opacity={0.5}
-          cursor="default"
-        >
-          Documents
-        </Heading>
+      <HStack justifyContent="space-between" w="full" px={6}>
+        <SidebarMenu />
         <IconButton
           aria-label="Create New Document"
           variant="ios"

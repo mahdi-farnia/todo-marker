@@ -47,7 +47,7 @@ const Tabbar: React.FC = () => {
       >
         {openedEditors.map((docIndex, i) => (
           <Box key={i} pos="relative" scrollSnapAlign="start">
-            <Tab minW={150} fontSize="small" pr={10}>
+            <Tab minW={150} fontSize="small" whiteSpace="nowrap" pr={10}>
               {documents[docIndex].title.slice(0, 25) || 'Untitled'}
             </Tab>
             <CloseButton
