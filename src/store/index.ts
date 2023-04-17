@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
 import editorSlice from './editor.slice';
-import todosSlice from './todos.slice';
+import documentsSlice from './documents.slice';
 
 export const reduxStore = configureStore({
   devTools: true,
   reducer: {
     editor: editorSlice,
-    todos: todosSlice
+    documents: documentsSlice
   }
 });
 

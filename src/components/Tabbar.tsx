@@ -6,7 +6,7 @@ import { closeEditor, openEditor } from '../store/editor.slice';
 const Tabbar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { activeEditorIndex, openedEditors } = useAppSelector((state) => state.editor);
-  const todos = useAppSelector((state) => state.todos);
+  const documents = useAppSelector((state) => state.documents);
   const closeBtnId = useId();
 
   const onChange = useCallback(
@@ -45,10 +45,10 @@ const Tabbar: React.FC = () => {
           '&::-webkit-scrollbar': { display: 'none', appearance: 'none' }
         }}
       >
-        {openedEditors.map((todoIndex, i) => (
+        {openedEditors.map((docIndex, i) => (
           <Box key={i} pos="relative" scrollSnapAlign="start">
             <Tab minW={150} fontSize="small" pr={10}>
-              {todos[todoIndex].title.slice(0, 25) || 'Untitled'}
+              {documents[docIndex].title.slice(0, 25) || 'Untitled'}
             </Tab>
             <CloseButton
               data-key={i}

@@ -2,14 +2,14 @@ import { HStack, Heading, Icon, IconButton, VStack, useColorModeValue } from '@c
 import { useCallback } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useAppDispatch } from '../store';
-import { addTodo, dev_createTodo } from '../store/todos.slice';
+import { addDocument, dev_createDocument } from '../store/documents.slice';
 import SearchBox from './SearchBox';
-import TodoList from './TodoList';
+import DocumentList from './DocumentList';
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const onCreate = useCallback(
-    () => dispatch(addTodo(dev_createTodo(`Sample ${Math.floor(Math.random() * 100)}`))),
+    () => dispatch(addDocument(dev_createDocument(`Sample ${Math.floor(Math.random() * 100)}`))),
     [dispatch]
   );
 
@@ -37,17 +37,17 @@ const Sidebar: React.FC = () => {
           opacity={0.5}
           cursor="default"
         >
-          Todos
+          Documents
         </Heading>
         <IconButton
-          aria-label="Create New Todo"
+          aria-label="Create New Document"
           variant="ios"
           size="xs"
           onClick={onCreate}
           icon={<Icon as={AiOutlinePlus} />}
         />
       </HStack>
-      <TodoList px={6} />
+      <DocumentList px={6} />
     </VStack>
   );
 };

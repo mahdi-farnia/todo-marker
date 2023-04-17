@@ -22,9 +22,9 @@ const Toolbar: React.FC = () => {
   const editor = useAppSelector((state) => state.editor);
 
   const openPreview = useCallback(() => {
-    const todoIndex: number = editor.openedEditors[editor.activeEditorIndex];
+    const docIndex: number = editor.openedEditors[editor.activeEditorIndex];
 
-    window.open(`/preview?idx=${todoIndex}`, '_blank');
+    window.open(`/preview?idx=${docIndex}`, '_blank');
   }, [editor]);
 
   return (

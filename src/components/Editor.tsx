@@ -12,15 +12,15 @@ import { HiHashtag } from 'react-icons/hi';
 import { useAppDispatch, useAppSelector } from '../store';
 import WelcomeEditor from './WelcomeEditor';
 import { useCallback } from 'react';
-import { mutateTodo } from '../store/todos.slice';
+import { mutateDocument } from '../store/documents.slice';
 import Toolbar from './Toolbar';
 
 // IMPORTANT Maybe form with event change, enough for all mutations
 
 const Editor: React.FC = () => {
   const editor = useAppSelector((state) => state.editor);
-  const todos = useAppSelector((state) => state.todos);
-  const todosIndex = editor.openedEditors[editor.activeEditorIndex];
+  const documents = useAppSelector((state) => state.documents);
+  const documentsIndex = editor.openedEditors[editor.activeEditorIndex];
 
   const dispatch = useAppDispatch();
   const onTitleChange = useCallback(
@@ -28,8 +28,8 @@ const Editor: React.FC = () => {
       const target = e.target as HTMLInputElement;
 
       dispatch(
-        mutateTodo({
-          index: todosIndex,
+        mutateDocument({
+          index: documentsIndex,
           title: target.value
         })
       );
@@ -47,17 +47,17 @@ const Editor: React.FC = () => {
     return <WelcomeEditor />;
   }
 
-  const todo = todos[todosIndex];
+  const doc = documents[documentsIndex];
 
   return (
     <Box h="full" bgColor={bgColor} rounded="2xl" boxShadow={shadow} pt={8} pb={3} px={5}>
       <InputGroup size="lg">
         <InputLeftElement children={<Icon as={HiHashtag} />} />
-        <Input variant="ios" rounded="lg" value={todo.title} onChange={onTitleChange} />
+        <Input variant="ios" rounded="lg" value={doc.title} onChange={onTitleChange} />
       </InputGroup>
       <Toolbar />
       <Divider borderTopWidth={2} borderTopStyle="dashed" borderBottom="none" />
-      <Text>{todo.content}</Text>
+      <Text>{doc.content}</Text>
     </Box>
   );
 };

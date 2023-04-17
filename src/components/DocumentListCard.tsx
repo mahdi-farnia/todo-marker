@@ -1,6 +1,6 @@
 import { ListItem, ListItemProps, useColorModeValue } from '@chakra-ui/react';
 
-const TodoListCard: React.FC<ListItemProps> = ({
+const DocumentListCard: React.FC<ListItemProps> = ({
   borderColor: _,
   border,
   rounded,
@@ -24,4 +24,4 @@ const TodoListCard: React.FC<ListItemProps> = ({
   );
 };
 
-export default TodoListCard;
+export default DocumentListCard;
