@@ -36,6 +36,10 @@ const documentsSlice = createSlice({
     },
     mutateDocument(state, { payload: doc }: PayloadAction<Partial<IDocument> & { index: number }>) {
       const { index } = doc;
+      console.assert(
+        Reflect.deleteProperty(doc, 'index'),
+        'could not delete index property from mutated document state object!'
+      );
 
       Object.assign(state[index], doc);
     }
