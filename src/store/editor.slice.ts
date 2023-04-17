@@ -32,7 +32,12 @@ const editorSlice = createSlice({
       }
 
       // Stay in the current opened editor
-      if (state.activeEditorIndex !== editorTabIndex) return;
+      if (state.activeEditorIndex !== editorTabIndex) {
+        if (editorTabIndex < state.activeEditorIndex) {
+          --state.activeEditorIndex; // shift everything to left
+        }
+        return;
+      }
 
       // Try to open previously opened tab, if there isn't, open next
       state.activeEditorIndex = editorTabIndex === 0 ? editorTabIndex : editorTabIndex - 1;
