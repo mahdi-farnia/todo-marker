@@ -53,7 +53,20 @@ export const Tooltip = defineStyleConfig({
 // TODO menu styling
 export const Menu = defineStyleConfig({
   variants: {
-    ios: (props) => ({})
+    ios: (props) => ({
+      list: {
+        fontSize: 'smaller',
+        bgColor: mode('ios.light', 'ios.dark')(props),
+        rounded: 'lg'
+      },
+      item: {
+        bgColor: 'transparent',
+        _focus: {
+          color: 'ios.primary',
+          bgColor: mode('blackAlpha.100', 'whiteAlpha.100')(props)
+        }
+      }
+    })
   }
 });
 
