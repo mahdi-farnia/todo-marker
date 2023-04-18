@@ -7,11 +7,16 @@ interface IEditorState {
     /** unique array of document index in db */
     openedDocIndexes: number[];
   };
-  // TODO editor state
-  // editor: { currentDocument: IDocument, all... }
+  doc: {
+    /** triggers save, negative number indicates no save performed yet */
+    lastSaveDate: number;
+  };
 }
 
-const initialState: IEditorState = { tabs: { activeIndex: -1, openedDocIndexes: [] } };
+const initialState: IEditorState = {
+  tabs: { activeIndex: -1, openedDocIndexes: [] },
+  doc: { lastSaveDate: -1 }
+};
 
 const editorSlice = createSlice({
   name: 'editor',
@@ -45,6 +50,8 @@ const editorSlice = createSlice({
 
       // Try to open previously opened tab, if there isn't, open next
       state.tabs.activeIndex = closedTabIndex === 0 ? closedTabIndex : closedTabIndex - 1;
+      // current editor didn't save anything yet!
+      state.doc.lastSaveDate = -1;
     }
   }
 });

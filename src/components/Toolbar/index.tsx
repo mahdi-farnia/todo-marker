@@ -15,7 +15,7 @@ import { ReactComponent as DoubleHash } from '../assets/dhash.svg';
 import { ReactComponent as TripleHash } from '../assets/thash.svg';
 import { ReactComponent as QuadHash } from '../assets/qhash.svg';
 import { ReactComponent as FiveHash } from '../assets/5hash.svg';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useAppSelector } from '../store';
 
 const Toolbar: React.FC = () => {
@@ -94,9 +94,7 @@ const Toolbar: React.FC = () => {
           </Tooltip>
         </WrapItem>
         <WrapItem>
-          <Button color="ios.primary" leftIcon={<Icon as={FiSave} fontSize="lg" />} size="sm">
-            Save
-          </Button>
+          <SaveButton />
         </WrapItem>
         <WrapItem>
           <Button color="ios.primary" leftIcon={<Icon as={CiExport} fontSize="lg" />} size="sm">
@@ -107,4 +105,35 @@ const Toolbar: React.FC = () => {
     </HStack>
   );
 };
+
+const SaveButton: React.FC = () => {
+  const lastSaveDate = useAppSelector((state) => state.editor.doc.lastSaveDate);
+  const [relativeTime, setRelativeTime] = useState<string>(
+    lastSaveDate < 0 ? 'No Save Since Open' : relativeTimeFrom(lastSaveDate)
+  );
+  const onHover = useCallback(
+    () => setRelativeTime(relativeTimeFrom(lastSaveDate)),
+    [lastSaveDate]
+  );
+
+  return (
+    <Tooltip label={relativeTime} fontSize="xs" placement="top" variant="ios">
+      <Button
+        color="ios.primary"
+        leftIcon={<Icon as={FiSave} fontSize="lg" />}
+        size="sm"
+        onMouseOver={onHover}
+      >
+        Save
+      </Button>
+    </Tooltip>
+  );
+};
+
+const relativeTimeFrom = (date: number): string =>
+  new Intl.RelativeTimeFormat('en', { style: 'long' }).format(
+    Math.ceil((date - Date.now()) / 60_000),
+    'minutes'
+  );
+
 export default Toolbar;

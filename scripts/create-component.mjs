@@ -1,5 +1,6 @@
 import { createInterface } from 'node:readline/promises';
 import { access, constants, writeFile } from 'node:fs/promises';
+import { basename } from 'node:path';
 
 const createTemplate = (name = '') => `import { Box } from "@chakra-ui/react";
 
@@ -36,7 +37,7 @@ async function create(cmpName = '', path = '') {
     }
   } catch (_) {
   } finally {
-    await writeFile(path, createTemplate(cmpName), 'utf8');
+    await writeFile(path, createTemplate(basename(cmpName)), 'utf8');
     console.log(`✅ ${cmpName}.tsx Created Successfully`);
   }
 }
