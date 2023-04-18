@@ -9,15 +9,16 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import { HiHashtag } from 'react-icons/hi';
-import { useAppDispatch, useAppSelector } from '../store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import WelcomeEditor from './WelcomeEditor';
 import { useCallback } from 'react';
-import { mutateDocument } from '../store/documents.slice';
+import { mutateDocument } from '@/store/documents.slice';
 import Toolbar from './Toolbar';
 
-// IMPORTANT Maybe form with event change, enough for all mutations
+// IMPORTANT this component should manage current document state on it's own, not by redux
 
 const Editor: React.FC = () => {
+  // Redux states
   const editor = useAppSelector((state) => state.editor.tabs);
   const documents = useAppSelector((state) => state.documents);
   const documentsIndex = editor.openedDocIndexes[editor.activeIndex];
@@ -37,6 +38,7 @@ const Editor: React.FC = () => {
     [dispatch, editor]
   );
 
+  // Ui states
   const bgColor = useColorModeValue('#fafafa', '#111');
   const shadow = useColorModeValue(
     '-5px -5px 8px 0 white, 5px 5px 3px 0 #efefef',

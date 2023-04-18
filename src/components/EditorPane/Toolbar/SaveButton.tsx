@@ -1,7 +1,7 @@
 import { Button, Icon, Tooltip } from '@chakra-ui/react';
 import { useState, useCallback } from 'react';
 import { FiSave } from 'react-icons/fi';
-import { useAppSelector } from '../../store';
+import { useAppSelector } from '@/store';
 
 const SaveButton: React.FC = () => {
   const lastSaveDate = useAppSelector((state) => state.editor.doc.lastSaveDate);

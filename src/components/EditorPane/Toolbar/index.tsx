@@ -8,24 +8,25 @@ import {
   Wrap,
   WrapItem
 } from '@chakra-ui/react';
-import { TbBrackets } from 'react-icons/tb';
+import { useCallback } from 'react';
 import { CiExport } from 'react-icons/ci';
-import { FiSave, FiCode, FiEye } from 'react-icons/fi';
-import { ReactComponent as DoubleHash } from '../assets/dhash.svg';
-import { ReactComponent as TripleHash } from '../assets/thash.svg';
-import { ReactComponent as QuadHash } from '../assets/qhash.svg';
-import { ReactComponent as FiveHash } from '../assets/5hash.svg';
-import { useCallback, useState } from 'react';
-import { useAppSelector } from '../store';
+import { FiCode, FiEye } from 'react-icons/fi';
+import { TbBrackets } from 'react-icons/tb';
+import { ReactComponent as FiveHash } from '@/assets/5hash.svg';
+import { ReactComponent as DoubleHash } from '@/assets/dhash.svg';
+import { ReactComponent as QuadHash } from '@/assets/qhash.svg';
+import { ReactComponent as TripleHash } from '@/assets/thash.svg';
+import { useAppSelector } from '@/store';
+import SaveButton from './SaveButton';
 
 const Toolbar: React.FC = () => {
-  const editor = useAppSelector((state) => state.editor.tabs);
+  const tabs = useAppSelector((state) => state.editor.tabs);
 
   const openPreview = useCallback(() => {
-    const docIndex: number = editor.openedDocIndexes[editor.activeIndex];
+    const docIndex: number = tabs.openedDocIndexes[tabs.activeIndex];
 
     window.open(`/preview?idx=${docIndex}`, '_blank');
-  }, [editor]);
+  }, [tabs]);
 
   return (
     <HStack as="aside" py={1} my={2} justifyContent="space-between">
@@ -105,35 +106,5 @@ const Toolbar: React.FC = () => {
     </HStack>
   );
 };
-
-const SaveButton: React.FC = () => {
-  const lastSaveDate = useAppSelector((state) => state.editor.doc.lastSaveDate);
-  const [relativeTime, setRelativeTime] = useState<string>(
-    lastSaveDate < 0 ? 'No Save Since Open' : relativeTimeFrom(lastSaveDate)
-  );
-  const onHover = useCallback(
-    () => setRelativeTime(relativeTimeFrom(lastSaveDate)),
-    [lastSaveDate]
-  );
-
-  return (
-    <Tooltip label={relativeTime} fontSize="xs" placement="top" variant="ios">
-      <Button
-        color="ios.primary"
-        leftIcon={<Icon as={FiSave} fontSize="lg" />}
-        size="sm"
-        onMouseOver={onHover}
-      >
-        Save
-      </Button>
-    </Tooltip>
-  );
-};
-
-const relativeTimeFrom = (date: number): string =>
-  new Intl.RelativeTimeFormat('en', { style: 'long' }).format(
-    Math.ceil((date - Date.now()) / 60_000),
-    'minutes'
-  );
 
 export default Toolbar;

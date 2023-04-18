@@ -1,7 +1,7 @@
 import { Box, CloseButton, Tab, TabList, Tabs } from '@chakra-ui/react';
 import { useCallback, useId } from 'react';
-import { useAppDispatch, useAppSelector } from '../store';
-import { closeEditor, openEditor } from '../store/editor.slice';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { closeEditor, openEditor } from '@/store/editor.slice';
 
 const Tabbar: React.FC = () => {
   const dispatch = useAppDispatch();

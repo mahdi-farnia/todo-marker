@@ -1,9 +1,9 @@
 import { Box, Heading, List as ChakraList, ListProps, Text } from '@chakra-ui/react';
 import DocumentListCard from './DocumentListCard';
 import React, { useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../store';
-import { openEditor } from '../store/editor.slice';
-import { IDocument } from '../store/documents.slice';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { openEditor } from '@/store/editor.slice';
+import { IDocument } from '@/store/documents.slice';
 
 interface ISortedDocument extends IDocument {
   /** index in the original array */

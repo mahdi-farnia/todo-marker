@@ -1,9 +1,9 @@
 import { HStack, Heading, Icon, IconButton, VStack, useColorModeValue } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { useAppDispatch } from '../store';
-import { addDocument, dev_createDocument } from '../store/documents.slice';
-import DocumentList from './DocumentList';
+import { useAppDispatch } from '@/store';
+import { addDocument, dev_createDocument } from '@/store/documents.slice';
+import DocumentsList from '@/components/DocumentsList';
 import SearchBox from './SearchBox';
 import SidebarMenu from './SidebarMenu';
 
@@ -43,7 +43,7 @@ const Sidebar: React.FC = () => {
           icon={<Icon as={AiOutlinePlus} />}
         />
       </HStack>
-      <DocumentList px={6} />
+      <DocumentsList px={6} />
     </VStack>
   );
 };
