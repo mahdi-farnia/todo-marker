@@ -5,13 +5,13 @@ import { closeEditor, openEditor } from '../store/editor.slice';
 
 const Tabbar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { activeEditorIndex, openedEditors } = useAppSelector((state) => state.editor);
+  const { activeIndex, openedDocIndexes } = useAppSelector((state) => state.editor.tabs);
   const documents = useAppSelector((state) => state.documents);
   const closeBtnId = useId();
 
   const onChange = useCallback(
-    (tabIndex: number) => dispatch(openEditor(openedEditors[tabIndex])),
-    [dispatch, openedEditors]
+    (tabIndex: number) => dispatch(openEditor(openedDocIndexes[tabIndex])),
+    [dispatch, openedDocIndexes]
   );
 
   const onClose = useCallback(
@@ -26,7 +26,7 @@ const Tabbar: React.FC = () => {
 
   return (
     <Tabs
-      index={Math.max(activeEditorIndex, 0)}
+      index={Math.max(activeIndex, 0)}
       pos="absolute"
       onChange={onChange}
       top={5}
@@ -45,7 +45,7 @@ const Tabbar: React.FC = () => {
           '&::-webkit-scrollbar': { display: 'none', appearance: 'none' }
         }}
       >
-        {openedEditors.map((docIndex, i) => (
+        {openedDocIndexes.map((docIndex, i) => (
           <Box key={i} pos="relative" scrollSnapAlign="start">
             <Tab minW={150} fontSize="small" whiteSpace="nowrap" pr={10}>
               {documents[docIndex].title.slice(0, 25) || 'Untitled'}

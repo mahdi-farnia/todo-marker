@@ -19,10 +19,10 @@ import { useCallback } from 'react';
 import { useAppSelector } from '../store';
 
 const Toolbar: React.FC = () => {
-  const editor = useAppSelector((state) => state.editor);
+  const editor = useAppSelector((state) => state.editor.tabs);
 
   const openPreview = useCallback(() => {
-    const docIndex: number = editor.openedEditors[editor.activeEditorIndex];
+    const docIndex: number = editor.openedDocIndexes[editor.activeIndex];
 
     window.open(`/preview?idx=${docIndex}`, '_blank');
   }, [editor]);

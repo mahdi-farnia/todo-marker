@@ -1,46 +1,50 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface IEditorState {
-  /** numbers less than zero indicate no editor, index of editors */
-  activeEditorIndex: number;
-  /** Unique array of document index */
-  openedEditors: number[];
+  tabs: {
+    /** index of openedDocIndexes, negative number indicates closed editor */
+    activeIndex: number;
+    /** unique array of document index in db */
+    openedDocIndexes: number[];
+  };
+  // TODO editor state
+  // editor: { currentDocument: IDocument, all... }
 }
 
-const initialState: IEditorState = { activeEditorIndex: -1, openedEditors: [] };
+const initialState: IEditorState = { tabs: { activeIndex: -1, openedDocIndexes: [] } };
 
 const editorSlice = createSlice({
   name: 'editor',
   initialState,
   reducers: {
-    openEditor(state, { payload: dataIndex }: PayloadAction<number>) {
-      let currentIndex = state.openedEditors.indexOf(dataIndex);
+    openEditor(state, { payload: docIndex }: PayloadAction<number>) {
+      let currentIndex = state.tabs.openedDocIndexes.indexOf(docIndex);
 
       if (currentIndex < 0) {
-        currentIndex = state.openedEditors.push(dataIndex) - 1;
+        currentIndex = state.tabs.openedDocIndexes.push(docIndex) - 1;
       }
 
-      state.activeEditorIndex = currentIndex;
+      state.tabs.activeIndex = currentIndex;
     },
-    closeEditor(state, { payload: editorTabIndex }: PayloadAction<number>) {
-      state.openedEditors.splice(editorTabIndex, 1);
+    closeEditor(state, { payload: closedTabIndex }: PayloadAction<number>) {
+      state.tabs.openedDocIndexes.splice(closedTabIndex, 1);
 
       // Close when all closed
-      if (state.openedEditors.length === 0) {
-        state.activeEditorIndex = -1;
+      if (state.tabs.openedDocIndexes.length === 0) {
+        state.tabs.activeIndex = -1;
         return;
       }
 
       // Stay in the current opened editor
-      if (state.activeEditorIndex !== editorTabIndex) {
-        if (editorTabIndex < state.activeEditorIndex) {
-          --state.activeEditorIndex; // shift everything to left
+      if (state.tabs.activeIndex !== closedTabIndex) {
+        if (closedTabIndex < state.tabs.activeIndex) {
+          --state.tabs.activeIndex; // shift everything to left
         }
         return;
       }
 
       // Try to open previously opened tab, if there isn't, open next
-      state.activeEditorIndex = editorTabIndex === 0 ? editorTabIndex : editorTabIndex - 1;
+      state.tabs.activeIndex = closedTabIndex === 0 ? closedTabIndex : closedTabIndex - 1;
     }
   }
 });

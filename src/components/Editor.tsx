@@ -18,9 +18,9 @@ import Toolbar from './Toolbar';
 // IMPORTANT Maybe form with event change, enough for all mutations
 
 const Editor: React.FC = () => {
-  const editor = useAppSelector((state) => state.editor);
+  const editor = useAppSelector((state) => state.editor.tabs);
   const documents = useAppSelector((state) => state.documents);
-  const documentsIndex = editor.openedEditors[editor.activeEditorIndex];
+  const documentsIndex = editor.openedDocIndexes[editor.activeIndex];
 
   const dispatch = useAppDispatch();
   const onTitleChange = useCallback(
@@ -43,7 +43,7 @@ const Editor: React.FC = () => {
     'inset -5px -5px 10px 0 hsl(0 0% 14% / 1), inset 5px 5px 8px 0 hsl(0 0% 5% / 1)'
   );
 
-  if (editor.activeEditorIndex < 0) {
+  if (editor.activeIndex < 0) {
     return <WelcomeEditor />;
   }
 
