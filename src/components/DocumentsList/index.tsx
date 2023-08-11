@@ -64,13 +64,13 @@ const List: React.FC<ListProps & { docs: ISortedDocument[] }> = ({ docs, ...prop
           <Heading as="h6" fontSize="md" noOfLines={1} mb={1}>
             {datum.title || 'Untitled'}
           </Heading>
-          {datum.content.length === 0 ? (
+          {datum.contents.length === 0 ? (
             <Text opacity={0.5} fontSize="x-small" fontWeight="semibold" pl={1}>
               Empty Description
             </Text>
           ) : (
             <Text noOfLines={2} fontSize="smaller" pl={1}>
-              {datum.content}
+              {datum.contents[0].value}
             </Text>
           )}
           <Text mt={2} fontSize="x-small" fontWeight="semibold" lang="fa" opacity={0.3}>

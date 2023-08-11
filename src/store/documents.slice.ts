@@ -1,34 +1,68 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { dev_DocumentInitialState } from './dev_seedDocuments';
+
+export const enum DocumentContentType {
+  BasicString = 0,
+  H2 = 1,
+  H3 = 2,
+  H4 = 3,
+  H5 = 4,
+  CheckBox = 5,
+  CodeBlock = 6
+}
+
+export interface IBasicDocumentContent {
+  type: DocumentContentType;
+  value: string;
+}
+
+export interface IDocumentSimpleTextOnlyContent extends IBasicDocumentContent {
+  type:
+    | DocumentContentType.BasicString
+    | DocumentContentType.H2
+    | DocumentContentType.H3
+    | DocumentContentType.H4
+    | DocumentContentType.H5;
+}
+
+export interface IDocumentCheckBoxContent extends IBasicDocumentContent {
+  type: DocumentContentType.CheckBox;
+  checked: boolean;
+  indent: number;
+}
+
+export interface IDocumentCodeBlockContent extends IBasicDocumentContent {
+  type: DocumentContentType.CodeBlock;
+  lang: string;
+}
+
+export type DocumentContent =
+  | IDocumentSimpleTextOnlyContent
+  | IDocumentCheckBoxContent
+  | IDocumentCodeBlockContent;
 
 export interface IDocument {
   title: string;
-  content: string;
+  contents: DocumentContent[];
   dateCreated: number;
   lastModified: number;
   pinned: boolean;
 }
 
-// NOTE Dev Only
-const initialState: IDocument[] = [
-  dev_createDocument('Document Marker', true),
-  dev_createDocument('SoR Bank')
-];
-
-// NOTE Dev Only
-export function dev_createDocument(title: string, pinned?: boolean): IDocument {
-  return {
-    title,
-    content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, ad. Quo voluptas id voluptatibus laudantium, modi nisi, qui quisquam odit ipsum rem, corrupti adipisci tempora error dolorum beatae delectus consequatur.',
-    dateCreated: Date.now(),
-    lastModified: Date.now() - 1_000 * 60 * 60,
-    pinned: !!pinned
-  };
-}
+/**
+ * // NOTE For Future
+ * set initial state to only the current document
+ * put actions like:
+ * dispose(void) -> clear current state -> no editor is active
+ * switchDocumentTo(index: number) -> index is the corresponding index in the DB
+ * mutateDocument(doc) -> mutate the current state
+ * saveDocument(void) -> save using localforage to DB
+ */
 
 const documentsSlice = createSlice({
   name: 'documents',
-  initialState,
+  // @ts-ignore
+  initialState: dev_DocumentInitialState,
   reducers: {
     addDocument(state, { payload: doc }: PayloadAction<IDocument>) {
       state.push(doc);

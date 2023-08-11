@@ -1,5 +1,5 @@
 import { ThemeOverride, extendTheme } from '@chakra-ui/react';
-import { Button, Input, Tabs, Tooltip, Menu, iosColor, mode } from './ios.style';
+import { Button, Input, Tabs, Tooltip, Menu, Text, iosColor, mode } from './app.style';
 
 export const theme = extendTheme({
   styles: {
@@ -10,6 +10,9 @@ export const theme = extendTheme({
       '[lang=fa]': {
         fontFamily: ['Vazir', 'sans-serif'].join(','),
         direction: 'rtl'
+      },
+      '[contenteditable]': {
+        outline: 'none'
       }
     })
   },
@@ -22,7 +25,8 @@ export const theme = extendTheme({
     Button,
     Tabs,
     Tooltip,
-    Menu
+    Menu,
+    Text
   },
   colors: {
     ios: iosColor

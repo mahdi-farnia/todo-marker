@@ -50,7 +50,6 @@ export const Tooltip = defineStyleConfig({
   }
 });
 
-// TODO menu styling
 export const Menu = defineStyleConfig({
   variants: {
     ios: (props) => ({
@@ -66,6 +65,29 @@ export const Menu = defineStyleConfig({
           bgColor: mode('blackAlpha.100', 'whiteAlpha.100')(props)
         }
       }
+    })
+  }
+});
+
+export const Text = defineStyleConfig({
+  variants: {
+    markdown: (props) => ({
+      bgColor: mode('ios.light', 'ios.dark')(props),
+      rounded: 'md',
+      px: 1.5,
+      py: 1
+    }),
+    markdown_input: (props) => ({
+      borderBottom: '1px solid',
+      borderBottomColor: mode('blackAlpha.300', 'whiteAlpha.300')(props),
+      pl: 10,
+      py: 1
+    }),
+    code: (props) => ({
+      px: 1.5,
+      py: 1,
+      rounded: 'md',
+      bgColor: mode('rgb(218, 235, 255)', 'rgb(30, 40, 51)')(props) // TODO change BG
     })
   }
 });

@@ -2,18 +2,28 @@ import { HStack, Heading, Icon, IconButton, VStack, useColorModeValue } from '@c
 import { useCallback } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useAppDispatch } from '@/store';
-import { addDocument, dev_createDocument } from '@/store/documents.slice';
+import { addDocument } from '@/store/documents.slice';
+import { dev_createDocument } from '@/store/dev_seedDocuments';
 import DocumentsList from '@/components/DocumentsList';
 import SearchBox from './SearchBox';
 import SidebarMenu from './SidebarMenu';
 
-// TODO pinned documents in list
+// TODO open empty document for creation
 // TODO search documents
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const onCreate = useCallback(
-    () => dispatch(addDocument(dev_createDocument(`Sample ${Math.floor(Math.random() * 100)}`))),
+    () =>
+      dispatch(
+        addDocument(
+          dev_createDocument(
+            `Sample ${Math.floor(Math.random() * 100)}`,
+            [{ type: 0, value: 'Empty' }],
+            Math.random() >= 0.5
+          )
+        )
+      ),
     [dispatch]
   );
 

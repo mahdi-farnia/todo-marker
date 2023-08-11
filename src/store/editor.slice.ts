@@ -52,10 +52,13 @@ const editorSlice = createSlice({
       state.tabs.activeIndex = closedTabIndex === 0 ? closedTabIndex : closedTabIndex - 1;
       // current editor didn't save anything yet!
       state.doc.lastSaveDate = -1;
+    },
+    saveActiveEditor(state) {
+      state.doc.lastSaveDate = Date.now();
     }
   }
 });
 
-export const { closeEditor, openEditor } = editorSlice.actions;
+export const { closeEditor, openEditor, saveActiveEditor } = editorSlice.actions;
 
 export default editorSlice.reducer;

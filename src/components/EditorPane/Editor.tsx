@@ -1,3 +1,5 @@
+import { useAppDispatch, useAppSelector } from '@/store';
+import { mutateDocument } from '@/store/documents.slice';
 import {
   Box,
   Divider,
@@ -5,17 +7,16 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Text,
+  VStack,
   useColorModeValue
 } from '@chakra-ui/react';
-import { HiHashtag } from 'react-icons/hi';
-import { useAppDispatch, useAppSelector } from '@/store';
-import WelcomeEditor from './WelcomeEditor';
 import { useCallback } from 'react';
-import { mutateDocument } from '@/store/documents.slice';
+import { HiHashtag } from 'react-icons/hi';
+import DocumentContentSwitch from './SwitchDocumentContent';
 import Toolbar from './Toolbar';
+import WelcomeEditor from './WelcomeEditor';
 
-// IMPORTANT this component should manage current document state on it's own, not by redux
+// refactor components that need document state data to prevent rerendering of Toolbar & etc...
 
 const Editor: React.FC = () => {
   // Redux states
@@ -24,8 +25,9 @@ const Editor: React.FC = () => {
   const documentsIndex = editor.openedDocIndexes[editor.activeIndex];
 
   const dispatch = useAppDispatch();
+
   const onTitleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLHeadingElement>) => {
       const target = e.target as HTMLInputElement;
 
       dispatch(
@@ -35,8 +37,25 @@ const Editor: React.FC = () => {
         })
       );
     },
-    [dispatch, editor]
+    [documentsIndex]
   );
+
+  const preventEnterKeyOnInputLike = useCallback((e: React.KeyboardEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+
+    if (e.key === 'Enter' && target.dataset.hasOwnProperty('inputLike')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, []);
+
+  // Would delete element if:
+  // const shouldDeleteElement = /delete(Hard|Soft)LineBackward/i.test(
+  //   (e as InputEvent).inputType
+  // );
+
+  // console.table({ shouldDeleteElement });
 
   // Ui states
   const bgColor = useColorModeValue('#fafafa', '#111');
@@ -52,16 +71,35 @@ const Editor: React.FC = () => {
   const doc = documents[documentsIndex];
 
   return (
-    <Box h="full" bgColor={bgColor} rounded="2xl" boxShadow={shadow} pt={8} pb={3} px={5}>
-      <InputGroup size="lg">
-        <InputLeftElement children={<Icon as={HiHashtag} />} />
-        <Input variant="ios" rounded="lg" value={doc.title} onChange={onTitleChange} />
-      </InputGroup>
-      <Toolbar />
-      <Divider borderTopWidth={2} borderTopStyle="dashed" borderBottom="none" />
-      <Text>{doc.content}</Text>
-    </Box>
+    <VStack
+      as="form"
+      h="full"
+      bgColor={bgColor}
+      rounded="2xl"
+      boxShadow={shadow}
+      pt={8}
+      pb={3}
+      px={5}
+      alignItems="stretch"
+      onSubmit={preventDefault}
+    >
+      <Box>
+        <InputGroup size="lg">
+          <InputLeftElement children={<Icon as={HiHashtag} />} />
+          <Input variant="ios" rounded="lg" value={doc.title} onChange={onTitleChange} />
+        </InputGroup>
+        <Toolbar />
+        <Divider borderTopWidth={2} borderTopStyle="dashed" borderBottom="none" mb={2} />
+      </Box>
+      <Box overflow="auto" w="full" flex={1} onKeyDown={preventEnterKeyOnInputLike}>
+        {doc.contents.map((content, i) => (
+          <DocumentContentSwitch key={i} data-content-index={i} content={content} />
+        ))}
+      </Box>
+    </VStack>
   );
 };
+
+const preventDefault: React.FormEventHandler = (e) => e.preventDefault();
 
 export default Editor;

@@ -12,12 +12,12 @@ import { useCallback } from 'react';
 import { CiExport } from 'react-icons/ci';
 import { FiCode, FiEye } from 'react-icons/fi';
 import { TbBrackets } from 'react-icons/tb';
-import { ReactComponent as FiveHash } from '@/assets/5hash.svg';
-import { ReactComponent as DoubleHash } from '@/assets/dhash.svg';
-import { ReactComponent as QuadHash } from '@/assets/qhash.svg';
-import { ReactComponent as TripleHash } from '@/assets/thash.svg';
 import { useAppSelector } from '@/store';
 import SaveButton from './SaveButton';
+import DoubleHash from '@/icons/DoubleHash';
+import FiveHash from '@/icons/FiveHash';
+import QuadHash from '@/icons/QuadHash';
+import TripleHash from '@/icons/TripleHash';
 
 const Toolbar: React.FC = () => {
   const tabs = useAppSelector((state) => state.editor.tabs);
@@ -35,7 +35,7 @@ const Toolbar: React.FC = () => {
           <IconButton
             aria-label="Place H2 Header"
             title="H2"
-            icon={<Icon as={DoubleHash} fontSize="lg" />}
+            icon={<Icon as={DoubleHash} color="#3478f6" fontSize="lg" />}
             size="sm"
           />
         </WrapItem>
@@ -43,7 +43,7 @@ const Toolbar: React.FC = () => {
           <IconButton
             aria-label="Place H3 Header"
             title="H3"
-            icon={<Icon as={TripleHash} fontSize="lg" />}
+            icon={<Icon as={TripleHash} color="#3478f6" fontSize="lg" />}
             size="sm"
           />
         </WrapItem>
@@ -51,7 +51,7 @@ const Toolbar: React.FC = () => {
           <IconButton
             aria-label="Place H4 Header"
             title="H4"
-            icon={<Icon as={QuadHash} fontSize="lg" />}
+            icon={<Icon as={QuadHash} color="#3478f6" fontSize="lg" />}
             size="sm"
           />
         </WrapItem>
@@ -59,7 +59,7 @@ const Toolbar: React.FC = () => {
           <IconButton
             aria-label="Place H5 Header"
             title="H5"
-            icon={<Icon as={FiveHash} fontSize="lg" />}
+            icon={<Icon as={FiveHash} color="#3478f6" fontSize="lg" />}
             size="sm"
           />
         </WrapItem>
